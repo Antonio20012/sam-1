@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+8
+<html>
+ <script src="aframe.min.js"></script>
+  <<script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+	<a-scene embedded arjs = 'trackingMethod: best;'>
+	<a-marker preset="hiro">
+	<a-anchor hit-testing-enabled='true'>
+	<a-torus position="0 0.5 0" color="green" radius="0.5" animation="property: components.material.material.color; type: color; from: green; to: red; loop: true; dur: 10000"></a-torus>
+	<a-plane width="3.5" height="3.5" rotation="-55 0 0" position="0 -1 0" color="purple" src="https://raw.githubusercontent.com/aframevr/sample-assets/master/assets/images/uvgrid/UV_Grid_Sm.jpg" width="7" height="7" rotation="-55 0 0" position="-2 -2 -5" color="purple"></a-plane>
+	<a-cylinder color="yellow" height="2" radius="0.05" position="0 0 0"></a-cylinder>
+	<a-cylinder color="blue" height="2" radius="0.05" position="1 0 0"></a-cylinder>
+	<a-torus-knot color="orange" radius="0.5" position="1 0.5 0" animation="property: rotation; to: 0 0 360; loop: true; dur: 10000" >
+	</a-torus-knot>
+ 	<a-plane  width="2.5" height="1.5" rotation="-55 0 0" position="0 1 -1" src="https://raw.githubusercontent.com/aframevr/sample-assets/master/assets/images/uvgrid/UV_Grid_Sm.jpg" color="purple"></a-plane>
+ <!-- 	<a-text value="Вітаємо у браузерній VR!" color="black"width="3" position="-1 0.5 -1"
+		font="arial-msdf.json" negate="false"></a-text> --> 
+	<a-text value="Welcome to browser`s VR" color="black" width="3" position="-1 0.5 -1"</a-text>
+	</a-anchor>
+	</a-marker>
+	<a-camera-static/>
+ </a-scene>
+</html>
