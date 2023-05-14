@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>360-градусный обзор сцены</title>
+    <style>
+        body { margin: 0; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+    <script src="https://threejs.org/build/three.js"></script>
+    <script>
+        // Создание сцены
+        var scene = new THREE.Scene();
+
+        // Создание камеры
+        var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(0, 0, 0);
+
+        // Создание рендерера
+        var renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // Добавление сферы (пример объекта в сцене)
+        var sphereGeometry = new THREE.SphereGeometry(5, 32, 32);
+        var sphereMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+        var sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+        scene.add(sphere);
+
+        // Создание контроллера для вращения камеры
+        var controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+        // Рендеринг сцены
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        }
+        animate();
+    </script>
+</body>
+</html>
