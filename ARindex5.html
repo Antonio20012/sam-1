@@ -1,18 +1,22 @@
 <!DOCTYPE html>
-8
-<?
 <html>
-<script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
-<script
-src="https://raw.githack.com/jeromeetienne/AR.js/2.1.8/aframe/build/aframe-ar.js"></script>
-<body style='margin: 0px; overflow: hidden;'>
-<a-scene embedded arjs="debugUIEnabled:false">
-<a-marker preset="hiro">
-<a-box position='0 0.5 0' material='color: red;'></a-box> </a-marker>
-<a-marker preset="kanji">
-<a-box position='0 0.5 0' material='color: blue;'></a-box>
-</a-marker>
-<a-entity camera></a-entity>
+  <head>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  </head>
+  <body>
+    <a-scene width="800" height="600" background="color: #000000">
+      <a-camera position="0 0 10"></a-camera>  
+	  <!-- Створюємо Сонце -->
+  <a-sphere radius="5" color="yellow"></a-sphere>
+
+  <!-- Земля -->
+  <a-sphere radius="1" position="10 0 0" material="src: texture_earth.jpg"></a-sphere>
+
+  <!-- Марс -->
+  <a-sphere radius="0.5" position="15 0 0" material="src: texture_mars.jpg"></a-sphere>
+
+  <!-- Юпітер -->
+  <a-sphere radius="1.5" position="20 0 0" material="src: texture_jupiter.jpg"></a-sphere>
 </a-scene>
 </body>
 </html>
