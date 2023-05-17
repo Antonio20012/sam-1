@@ -1,37 +1,62 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>A-Frame Gravity Simulation</title>
-  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-  <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/2.2.0/aframe/build/aframe-ar.js"></script>
+    <meta charset="utf-8">
+    <title>Three.js Example</title>
+    <style>
+        body { margin: 0; }
+        canvas { position: absolute; }
+    </style>
 </head>
 <body>
-  <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
-    <a-entity camera look-controls></a-entity>
-    <a-sphere id="sphere" position="0 5 -10" radius="1" color="red"></a-sphere>
-    <a-sphere position="3 5 -10" radius="0.5" color="blue"></a-sphere> <!-- Example: Second planet -->
-    <a-plane position="0 0 -10" rotation="-90 0 0" width="100" height="100" color="green"></a-plane>
-  </a-scene>
+    <script src="https://threejs.org/build/three.js"></script>
+    <script>
+        var scene = new THREE.Scene();
+        var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        var renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
 
-  <script>
-    AFRAME.registerComponent('gravity', {
-      tick: function () {
-        var sphere = document.getElementById('sphere');
-        var position = sphere.getAttribute('position');
-        var y = position.y;
-        var gravity = -9.8; // Gravity force
-        
-        // Calculate new position
-        var newY = y + gravity * 0.01; // 0.01 - time step (adjust as needed)
-        
-        // Update sphere position
-        sphere.setAttribute('position', {x: position.x, y: newY, z: position.z});
-      }
-    });
+        var textureLoader = new THREE.TextureLoader();
+        var backgroundTexture = textureLoader.load('https://img.freepik.com/premium-photo/star-flying-throught-space-for-scientific-films_1172-910.jpg');
+        scene.background = backgroundTexture;
 
-    // Add 'gravity' component to the sphere
-    document.getElementById('sphere').setAttribute('gravity', '');
-  </script>
+        function createObject(geometry, material, positionX) {
+            var object = new THREE.Mesh(geometry, material);
+            object.position.x = positionX;
+            scene.add(object);
+        }
+
+        var cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
+        var cubeMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+        createObject(cubeGeometry, cubeMaterial, -2);
+
+        var cylinderGeometry = new THREE.CylinderGeometry(0.5, 0.5, 1, 32);
+        var cylinderMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+        createObject(cylinderGeometry, cylinderMaterial, -1);
+
+        var sphereGeometry = new THREE.SphereGeometry(0.5, 32, 32);
+        var sphereMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
+        createObject(sphereGeometry, sphereMaterial, 0);
+
+        var torusGeometry = new THREE.TorusGeometry(0.5, 0.2, 32, 32);
+        var torusMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 });
+        createObject(torusGeometry, torusMaterial, 1);
+
+        var planeGeometry = new THREE.PlaneGeometry(5, 5);
+        var planeMaterial = new THREE.MeshBasicMaterial({ color: 0x808080, side: THREE.DoubleSide });
+        createObject(planeGeometry, planeMaterial, 2);
+
+        var coneGeometry = new THREE.ConeGeometry(0.5, 1, 32);
+        var coneMaterial = new THREE.MeshBasicMaterial({ color: 0xff00ff });
+        createObject(coneGeometry, coneMaterial, 3);
+
+        camera.position.z = 5;
+
+        function render() {
+            renderer.render(scene, camera);
+        }
+        render();
+    </script>
 </body>
 </html>
