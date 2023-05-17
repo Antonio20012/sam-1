@@ -1,21 +1,25 @@
 <!DOCTYPE html>
-8
 <html>
- <script src="aframe.min.js"></script>
-  <a-scene>
- <a-torus position="-2 1 -5" color="green" radius="1.2"></a-torus>
- <a-plane width="7" height="7" rotation="-55 0 0" 
- position="-2 -2 -5" color="purple"></a-plane>
- <a-cylinder color="yellow" height="2" radius="0.05"
- position="-2 -1 -5"></a-cylinder>
- <a-cylinder color="blue" height="2" radius="0.05"
- position="-3 -1 -5"></a-cylinder>
- <a-torus-knot color="orange" radius="1.2"
- position="-3 1 -5"></a-torus-knot>
- <a-plane src="https://raw.githubusercontent.com/aframevr/sampleassets/master/assets/images/illustration/758pxCanestra_di_frutta_(Caravaggio).jpg" width="7" height="7"
-rotation="-55 0 0" position="-2 -2 -5" color="purple"></a-plane>
- <a-text value="Welcome to browser's VR" color="black"
- width="10" position="-0.5 1 -6"></a-text>
- <a-sky color="grey"></a-sky>
- </a-scene>
+  <head>
+    <title>AR Marker-based A-Frame</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/2.3.1/aframe/build/aframe-ar.js"></script>
+  </head>
+  <body style="margin: 0px; overflow: hidden;">
+    <a-scene embedded arjs>
+      <a-marker type="hiro">
+        <a-box position="0 0.5 0" color="red"></a-box>
+      </a-marker>
+      
+      <a-marker type="kanji">
+        <a-sphere position="0 0.5 0" radius="0.5" color="green"></a-sphere>
+      </a-marker>
+      
+      <a-marker type="pattern" url="marker-pattern.patt">
+        <a-cylinder position="0 0.5 0" radius="0.5" height="1" color="blue"></a-cylinder>
+      </a-marker>
+      
+      <a-entity camera></a-entity>
+    </a-scene>
+  </body>
 </html>
