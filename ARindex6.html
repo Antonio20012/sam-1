@@ -1,15 +1,38 @@
 <!DOCTYPE html>
-8
 <html>
 <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
-<script
-src="https://raw.githack.com/jeromeetienne/AR.js/2.1.8/aframe/build/aframe-ar.js"></script>
+<script src="https://raw.githack.com/jeromeetienne/AR.js/2.1.8/aframe/build/aframe-ar.js"></script>
 <body style='margin: 0px; overflow: hidden;'>
 <a-scene embedded arjs="debugUIEnabled:false">
 <a-marker preset="hiro">
-<a-box position='0 0.5 0' material='color: red;'></a-box> </a-marker>
+  <a-entity position="-1 0 0" rotation="0 72 0">
+    <a-box position='0 0.5 0' material='color: red;'></a-box>
+  </a-entity>
+</a-marker>
 <a-marker preset="kanji">
-<a-box position='0 0.5 0' material='color: blue;'></a-box>
+  <a-entity position="1 0 0" rotation="0 -72 0">
+    <a-box position='0 0.5 0' material='color: blue;'></a-box>
+  </a-entity>
+</a-marker>
+<a-marker type="pattern" url="path/to/letterA-marker.patt">
+  <a-entity position="0 0 1" rotation="0 0 0">
+    <a-box position='0 0.5 0' material='color: green;'></a-box>
+  </a-entity>
+</a-marker>
+<a-marker type="pattern" url="path/to/letterB-marker.patt">
+  <a-entity position="-0.809 0 0.587" rotation="0 144 0">
+    <a-box position='0 0.5 0' material='color: yellow;'></a-box>
+  </a-entity>
+</a-marker>
+<a-marker type="pattern" url="path/to/letterC-marker.patt">
+  <a-entity position="0.309 0 0.951" rotation="0 216 0">
+    <a-box position='0 0.5 0' material='color: orange;'></a-box>
+  </a-entity>
+</a-marker>
+<a-marker type="pattern" url="path/to/letterD-marker.patt">
+  <a-entity position="0.309 0 -0.951" rotation="0 -216 0">
+    <a-box position='0 0.5 0' material='color: purple;'></a-box>
+  </a-entity>
 </a-marker>
 <a-entity camera></a-entity>
 </a-scene>
