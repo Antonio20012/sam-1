@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Мій NFT</title>
+  <style>
+    html, body {
+      margin: 0;
+      overflow: hidden;
+    }
+    
+    #nft-container {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 50%;
+      height: auto;
+    }
+    
+    #video-stream {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aframe/1.2.0/aframe.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Перевірка підтримки камери
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        // Запуск камери
+        navigator.mediaDevices.getUserMedia({ video: true })
+          .then(function(stream) {
+            // Створення відеоелемента для виведення зображення з камери
+            var videoStream = document.createElement('video');
+            videoStream.id = 'video-stream';
+            videoStream.srcObject = stream;
+            videoStream.autoplay = true;
+            videoStream.playsinline = true;
+            videoStream.style.objectFit = 'cover';
+            
+            // Додавання відеоелемента до сторінки
+            document.body.appendChild(videoStream);
+            
+            // Очікування завершення завантаження зображення з камери
+            videoStream.addEventListener('loadedmetadata', function() {
+              // Показувати NFT після завантаження зображення з камери
+              showNFT();
+            });
+          })
+          .catch(function(error) {
+            console.error('Помилка при включенні камери:', error);
+          });
+      } else {
+        console.error('Камера не підтримується в цьому браузері.');
+      }
+    });
+    
+    function showNFT() {
+      // Показувати контейнер NFT
+      var nftContainer = document.getElementById('nft-container');
+      nftContainer.style.display = 'block';
+    }
+  </script>
+</head>
+<body>
+  <div id="nft-container">
+    <a-scene embedded arjs>
+      <a-marker preset="hiro">
+        <a-image src="https://corpessentials.files.wordpress.com/2018/02/procrastination-humor01-e1519497408588.jpg"></a-image>
+      </a-marker>
+      <a-entity camera></a-entity>
+    </a-scene>
+  </div
+</body>
+</html>
