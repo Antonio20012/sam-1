@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AR Scene</title>
+    <style>
+        #arjs-loader {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body>
+    <div id="arjs-loader">
+        <div>Loading AR...</div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script>
+    <script src="https://cdn.rawgit.com/jeromeetienne/ar.js/2.3.0/aframe/build/aframe-ar.js"></script>
+    <script>
+        AFRAME.registerComponent('marker', {
+            init: function () {
+                this.el.addEventListener('markerFound', () => {
+                    // Логіка, яка виконується, коли маркер знайдено
+                    // Створення об'єктів, налаштування сцени та інше
+                });
+
+                this.el.addEventListener('markerLost', () => {
+                    // Логіка, яка виконується, коли маркер втрачено
+                    // Прибирання об'єктів, зупинка анімацій та інше
+                });
+            }
+        });
+
+        // Завантаження маркера
+        AFRAME.registerMarker('your-marker-name', {
+            // URL-адреса файлу зображення маркера
+            patternUrl: 'path/to/your-marker.patt',
+            // Розмір маркера в метрах
+            markerSize: 0.1,
+            // Ідентифікатор компонента, пов'язаного з маркером
+            // Використовуємо 'marker', якщо ви використовуєте компонент, описаний вище
+            // Якщо у вас інший я використовуватиму інший ідентифікатор компонента, замість 'marker'
+// Ви можете замінити його на власний
+type: 'your-marker-component'
+});
+    AFRAME.registerComponent('your-marker-component', {
+        init: function () {
+            // Логіка, яка виконується, коли маркер знайдено
+            // Створення об'єктів, налаштування сцени та інше
+        },
+        tick: function () {
+            // Логіка, яка виконується кожен кадр
+            // Оновлення позиції, орієнтації об'єктів та інше
+        },
+        remove: function () {
+            // Логіка, яка виконується при видаленні компонента
+            // Прибирання об'єктів, зупинка анімацій та інше
+        }
+    });
+</script>
+</body>
+</html>
