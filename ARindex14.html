@@ -1,88 +1,53 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Накладання маски на обличчя</title>
-    <style>
-        #canvas {
-            display: block;
-            margin: 0 auto;
-        }
-    </style>
+  <title>MindAR Mask</title>
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar/dist/mind-ar.js"></script>
 </head>
 <body>
-    <canvas id="canvas"></canvas><script>
-    // Отримуємо посилання на відеопотік з веб-камери
-    navigator.mediaDevices.getUserMedia({ video: true })
-        .then(function(stream) {
-            var video = document.createElement('video');
-            video.srcObject = stream;
-            video.play();
+  <video id="mindar-video" autoplay playsinline></video>
+  <canvas id="mindar-canvas" width="640" height="480"></canvas>
 
-            // Очікуємо, поки відеопотік буде готовим
-            video.addEventListener('canplay', function() {
-                var canvas = document.getElementById('canvas');
-                var context = canvas.getContext('2d');
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      // Отримання посилань на елементи video та canvas
+      const video = document.getElementById('mindar-video');
+      const canvas = document.getElementById('mindar-canvas');
 
-                // Оновлюємо розміри канвасу при зміні розмірів вікна
-                window.addEventListener('resize', function() {
-                    canvas.width = window.innerWidth;
-                    canvas.height = window.innerHeight;
-                });
+      // Опції MindAR
+      const mindAROptions = {
+        video: video,
+        canvas: canvas,
+        useVideo: true,
+        maxFaces: 1 // Максимальна кількість розпізнаних облич
+      };
 
-                // Встановлюємо початкові розміри канвасу
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
+      // Ініціалізація MindAR з опціями
+      const mindAR = new MindAR(mindAROptions);
 
-                // Завантажуємо модель для виявлення облич
-                faceapi.nets.tinyFaceDetector.loadFromUri('/models')
-                    .then(function() {
-                        // Запускаємо анімацію для накладання маски на кожен кадр відео
-                        requestAnimationFrame(drawMask);
-                    })
-                    .catch(function(err) {
-                        console.log("Помилка при завантаженні моделі: " + err);
-                    });
+      // Завантаження маски обличчя
+      const maskImage = new Image();
+      maskImage.src = 'https://images.prom.ua/3843444964_w640_h640_maska-anonimusa.jpg';
 
-                function drawMask() {
-                    // Копіюємо вміст відео на канвас
-                    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+      // Додавання сцени та маски
+      mindAR.onARLoad(() => {
+        // Створення сцени
+        const scene = new MindAR.Scene();
 
-                    // Виявлення облич за допомогою моделі
-                    faceapi.detectSingleFace(canvas, new faceapi.TinyFaceDetectorOptions())
-                        .then(function(face) {
-                            if (face) {
-                                // Накладання маски на обличчя
-                                // Тут ви можете використовувати бібліотеки для обробки зображень
-                                // або навчити модель комп'ютерного зору для більш складних ефектів
+        // Створення об'єкта маски
+        const mask = new MindAR.Object3D(maskImage);
+        mask.scale.set(1.5, 1.5, 1.5); // Налаштування розміру маски (за потреби)
 
-                                // Розміри та положення маски
-                                var maskSize = Math.min(face.boundingBox.width, face.boundingBox.height) * 1.2;
-                                var maskX = face.boundingBox.x + (face.boundingBox.width - maskSize) / 2;
-                                var maskY = face.boundingBox.y + (face.boundingBox.height - maskSize) / 2;
+        // Додавання маски до сцени
+        scene.addObject(mask);
 
-                                // Малюємо маску на канвасі
-                                context.beginPath();
-                                context.arc(maskX + maskSize / 2, maskY + maskSize / 2, maskSize / 2, 0, 2 * Math.PI);
-                                context.lineWidth = "4";
-                                context.strokeStyle = "red";
-                                context.stroke();
-                                // Заповнюємо маску з полупрозорим кольором
-                                context.fillStyle = "rgba(255, 0, 0, 0.3)";
-                                context.fill();
-                            }
+        // Додавання сцени до MindAR
+        mindAR.addScene(scene);
+      });
 
-                            // Продовжуємо анімацію наступного кадру відео
-                            requestAnimationFrame(drawMask);
-                        })
-                        .catch(function(err) {
-                            console.log("Помилка при виявленні обличчя: " + err);
-                        });
-                }
-            });
-        })
-        .catch(function(err) {
-            console.log("Помилка при отриманні відеопотоку: " + err);
-        });
-</script>
+      // Запуск MindAR
+      mindAR.start();
+    });
+  </script>
 </body>
 </html>
