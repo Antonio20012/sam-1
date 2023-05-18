@@ -1,34 +1,29 @@
+<!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
-		<script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
-		<script src="penta.js"></script>
-	</head>
-	<body>
-		<a-scene embedded arjs="trackingMethod: best;">
-			<a-marker type="pattern" url="assets/pattern-solarSystem.patt" id="solarSystemMarker" registerevents>
-				<a-sphere radius="0.15" color="red"></a-sphere>
-				<a-entity id="lineAB"></a-entity>
-			</a-marker>
-			<a-marker type="pattern" url="assets/pattern-letterB.patt" id="B" registerevents>
-				<a-sphere radius="0.15" color="red"></a-sphere>
-				<a-entity id="lineBC"></a-entity>
-			</a-marker>
-			<a-marker type="pattern" url="assets/pattern-letterC.patt" id="C" registerevents>
-				<a-sphere radius="0.15" color="red"></a-sphere>
-				<a-entity id="lineCD"></a-entity>
-			</a-marker>
-			<a-marker type="pattern" url="assets/pattern-letterD.patt" id="D" registerevents>
-				<a-sphere radius="0.15" color="red"></a-sphere>
-				<a-entity id="lineDF"></a-entity>
-			</a-marker>
-			<a-marker type="pattern" url="assets/pattern-letterF.patt" id="F" registerevents>
-				<a-sphere radius="0.15" color="red"></a-sphere>
-				<a-entity id="lineFA"></a-entity>
-			</a-marker>
-			<a-entity run position="0 1.5 -3"></a-entity>
-			<a-camera-static></a-camera-static>
-		</a-scene>
-	</body>
+<head>
+    <meta charset="utf-8">
+    <title>Сонячна система у віртуальній реальності</title>
+    <style>
+        #canvas {
+            width: 800px;
+            height: 600px;
+        }
+    </style>
+</head>
+<body>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <a-scene>
+        <a-sky color="#000"></a-sky>
+        <a-sphere radius="1" position="0 0 -5" color="#fcb603" src="sun.jpg"></a-sphere>
+        <a-sphere radius="0.5" position="2 0 -5" color="#c2c2c2" src="mercury.jpg"></a-sphere>
+        <a-sphere radius="1" position="4 0 -5" color="#c89f7e" src="venus.jpg"></a-sphere>
+        <a-sphere radius="1" position="6 0 -5" color="#3c6eb4" src="earth.jpg"></a-sphere>
+        <a-sphere radius="0.5" position="9 0 -5" color="#a53a19" src="mars.jpg"></a-sphere>
+        <a-sphere radius="2" position="14 0 -5" color="#c8975d" src="jupiter.jpg"></a-sphere>
+        <a-sphere radius="1.5" position="20 0 -5" color="#f0e68c" src="saturn.jpg"></a-sphere>
+        <a-sphere radius="1" position="26 0 -5" color="#6be1ff" src="uranus.jpg"></a-sphere>
+        <a-sphere radius="1" position="32 0 -5" color="#2056f2" src="neptune.jpg"></a-sphere>
+        <a-sphere radius="0.2" position="36 0 -5" color="#9a9a9a" src="pluto.jpg"></a-sphere>
+    </a-scene>
+</body>
 </html>
