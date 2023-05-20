@@ -3,27 +3,34 @@
 <head>
     <meta charset="utf-8">
     <title>Сонячна система у віртуальній реальності</title>
-    <style>
-        #canvas {
-            width: 800px;
-            height: 600px;
-        }
-    </style>
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
 </head>
 <body>
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <a-scene>
         <a-sky color="#000"></a-sky>
-        <a-sphere radius="1" position="0 0 -5" color="#fcb603" src="sun.jpg"></a-sphere>
-        <a-sphere radius="0.5" position="2 0 -5" color="#c2c2c2" src="mercury.jpg"></a-sphere>
-        <a-sphere radius="1" position="4 0 -5" color="#c89f7e" src="venus.jpg"></a-sphere>
-        <a-sphere radius="1" position="6 0 -5" color="#3c6eb4" src="earth.jpg"></a-sphere>
-        <a-sphere radius="0.5" position="9 0 -5" color="#a53a19" src="mars.jpg"></a-sphere>
-        <a-sphere radius="2" position="14 0 -5" color="#c8975d" src="jupiter.jpg"></a-sphere>
-        <a-sphere radius="1.5" position="20 0 -5" color="#f0e68c" src="saturn.jpg"></a-sphere>
-        <a-sphere radius="1" position="26 0 -5" color="#6be1ff" src="uranus.jpg"></a-sphere>
-        <a-sphere radius="1" position="32 0 -5" color="#2056f2" src="neptune.jpg"></a-sphere>
-        <a-sphere radius="0.2" position="36 0 -5" color="#9a9a9a" src="pluto.jpg"></a-sphere>
+        
+        <a-sphere radius="10" position="0 0 -50" color="#fcb603" src="sun.jpg"></a-sphere>
+        <a-sphere radius="4" position="20 0 -50" color="#c89f7e" src="mercury.jpg" random-position></a-sphere>
+        <a-sphere radius="5" position="30 0 -50" color="#c2c2c2" src="venus.jpg" random-position></a-sphere>
+        <a-sphere radius="6" position="40 0 -50" color="#3c6eb4" src="earth.jpg" random-position></a-sphere>
+        <a-sphere radius="4" position="55 0 -50" color="#a53a19" src="mars.jpg" random-position></a-sphere>
+        <a-sphere radius="12" position="80 0 -50" color="#c8975d" src="jupiter.jpg" random-position></a-sphere>
+        <a-sphere radius="9" position="110 0 -50" color="#f0e68c" src="saturn.jpg" random-position></a-sphere>
+        <a-sphere radius="8" position="140 0 -50" color="#6be1ff" src="uranus.jpg" random-position></a-sphere>
+        <a-sphere radius="7" position="170 0 -50" color="#2056f2" src="neptune.jpg" random-position></a-sphere>
+        <a-sphere radius="2" position="200 0 -50" color="#9a9a9a" src="pluto.jpg" random-position></a-sphere>
+        
+        <script>
+            AFRAME.registerComponent('random-position', {
+                init: function () {
+                    var radius = 100;
+                    var el = this.el;
+                    el.object3D.position.x = Math.random() * radius * 2 - radius;
+                    el.object3D.position.y = Math.random() * radius * 2 - radius;
+                    el.object3D.position.z = Math.random() * radius * 2 - radius;
+                }
+            });
+        </script>
     </a-scene>
 </body>
 </html>
