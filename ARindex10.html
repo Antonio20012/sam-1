@@ -15,7 +15,7 @@
 
         // Создание камеры
         var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.set(0, 0, 0);
+        camera.position.set(0, 0, 10);
 
         // Создание рендерера
         var renderer = new THREE.WebGLRenderer();
@@ -26,6 +26,7 @@
         var sphereGeometry = new THREE.SphereGeometry(5, 32, 32);
         var sphereMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
         var sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+        sphere.material.side = THREE.BackSide; // Разворачиваем материал сферы внутрь
         scene.add(sphere);
 
         // Создание контроллера для вращения камеры

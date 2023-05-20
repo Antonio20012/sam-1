@@ -1,116 +1,74 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Fortress Drawing</title>
-  <style>
-    canvas {
-      border: 1px solid black;
-    }
-  </style>
+  <meta charset="utf-8">
+  <title>Fortress Scene</title>
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
 </head>
 <body>
-  <canvas id="fortressCanvas" width="500" height="600"></canvas>
+  <a-scene arjs="sourceType: webcam; detectionMode: mono_and_matrix; matrixCodeType: 3x3;">
+    <!-- Додайте маркер доповненої реальності -->
+    <a-marker preset="custom" type="pattern" url="path/to/marker.patt">
+      
+      <!-- Фортеця -->
+      <a-entity id="fortress" position="0 0 0">
+        <!-- Текстура цеглинок -->
+        <a-plane src="path/to/bricks.jpg" width="10" height="10"></a-plane>
+      </a-entity>
+
+      <!-- Прапор -->
+      <a-entity id="flag" position="0 4 0"></a-entity>
+
+    </a-marker>
+
+    <!-- Камера -->
+    <a-entity camera></a-entity>
+  </a-scene>
 
   <script>
-    var canvas = document.getElementById('fortressCanvas');
-    var context = canvas.getContext('2d');
+    // Отримати посилання на елемент сцени з A-Frame
+    const scene = document.querySelector('a-scene');
 
-    // Load the brick texture
-    var brickTexture = new Image();
-    brickTexture.src = 'https://raw.githubusercontent.com/aframevr/sample-assets/master/assets/images/bricks/brick_bump.jpg';
-    brickTexture.onload = function() {
-      // Call the drawFortress function after the texture has loaded
-      drawFortress();
-    };
+    // Функція для створення геометрії фортеці
+    function createFortressGeometry() {
+      const fortress = new THREE.Group();
 
-    // Variables for animation
-    var flagHeight = 0;
-    var windStrength = 0.2;
+      // Додавання циліндрів, конусів, прямокутних паралелепіпедів, сфер до групи "fortress"
+      const cylinder = new THREE.Mesh(
+        new THREE.CylinderGeometry(radiusTop, radiusBottom, height, radialSegments),
+        new THREE.MeshBasicMaterial({ color: 0x808080 }) // Налаштування кольору циліндра
+      );
+      fortress.add(cylinder);
 
-    // Function to draw a cylinder
-    function drawCylinder(x, y, radius, height, color) {
-      context.fillStyle = color;
-      context.beginPath();
-      context.moveTo(x + radius, y);
-      context.lineTo(x + radius, y + height);
-      context.arc(x, y + height, radius, 0, Math.PI * 2);
-      context.lineTo(x - radius, y);
-      context.arc(x, y, radius, 0, Math.PI, true);
-      context.closePath();
-      context.fill();
+      const cone = new THREE.Mesh(
+        new THREE.ConeGeometry(radius, height, radialSegments),
+        new THREE.MeshBasicMaterial({ color: 0x808080 }) // Налаштування кольору конуса
+      );
+      cone.position.set(x, y, z);
+      fortress.add(cone);
+
+      // Додайте решту геометрій фортеці за необхідністю
+
+      return fortress;
     }
 
-    // Function to draw a cone
-    function drawCone(x, y, radius, height, color) {
-      context.fillStyle = color;
-      context.beginPath();
-      context.moveTo(x, y);
-      context.lineTo(x + radius, y + height);
-      context.lineTo(x - radius, y + height);
-      context.closePath();
-      context.fill();
-    }
+    // Функція для створення геометрії прапора
+    function createFlagGeometry() {
+      const flag = new THREE.Mesh(
+        new THREE.PlaneGeometry(width, height),
+        new THREE.MeshBasicMaterial({ color: 0xFF0000 }) // Налаштування кольору прапора 
+		});
+return flag;
+}// Створення фортеці
+const fortress = createFortressGeometry();
+scene.appendChild(fortress);
 
-    // Function to draw a rectangular prism
-    function drawRectangularPrism(x, y, width, height, depth, color) {
-      context.fillStyle = color;
-      context.fillRect(x - width/2, y - height, width, height);
-      context.beginPath();
-      context.moveTo(x - width/2, y - height);
-      context.lineTo(x, y - 2*height);
-      context.lineTo(x + width/2, y - height);
-      context.closePath();
-      context.fill();
-      context.fillRect(x - width/2, y - height, width, depth);
-    }
+// Створення прапора
+const flag = createFlagGeometry();
+fortress.add(flag);
 
-    // Function to draw a sphere
-    function drawSphere(x, y, radius, color) {
-      context.fillStyle = color;
-      context.beginPath();
-      context.arc(x, y, radius, 0, Math.PI * 2);
-      context.closePath();
-      context.fill();
-    }
-
-    // Draw the fortress
-    function drawFortress() {
-      // Clear the canvas
-      context.clearRect(0, 0, canvas.width, canvas.height);
-
-      // Draw the rectangular prism with the brick texture
-      var brickPattern = context.createPattern(brickTexture, 'repeat');
-      context.fillStyle = brickPattern;
-      drawRectangularPrism(250, 570, 150, 200, 50, brickPattern);
-
-      // Draw the towers (cylinders)
-      drawCylinder(150, 470, 30, 100, '#DEB887');
-drawCylinder(350, 470, 30, 100, '#DEB887');
-  // Draw the gates (cones)
-  drawCone(150, 470, 30, 70, '#00ff00');
-  drawCone(350, 470, 30, 70, '#00ff00');
-
-  // Draw the flag (rectangular prism)
-  context.fillStyle = '#0000FF';
-  context.fillRect(250, 95 - flagHeight, 120, 60);
-  context.font = '12px Arial';
-  context.fillStyle = '#FFFF00';
-  context.fillText('Thank You Mario', 255, 115 - flagHeight);
-  context.fillText('But Our Princess', 255, 127 - flagHeight);
-  context.fillText('Is in Another Castle', 255, 138 - flagHeight);
-
-  // Animate the flag
-  if (flagHeight < 20) {
-    flagHeight += 1;
-  }
-  flagHeight += Math.sin(flagHeight / 30) * windStrength;
-
-  // Request the next animation frame
-  requestAnimationFrame(drawFortress);
-}
-
-// Call the drawFortress function
-drawFortress();
- </script>
+// Анімація прапора
+flag.setAttribute('animation', 'property: position; from: 0 4 0; to: 0 10 0; dur: 2000; easing: linear; loop: true;');
+</script>
 </body>
 </html>

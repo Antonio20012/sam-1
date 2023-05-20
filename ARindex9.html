@@ -2,27 +2,27 @@
 <html>
 <head>
   <title>OBJLoader</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/loaders/OBJLoader.js"></script>
+  <script src="three.js-dev/build/three.js"></script>
+  <script src="js/OBJLoader.js"></script>
 </head>
 <body>
   <canvas id="Canvas"></canvas>
 
   <script>
-    var renderer = new three(1).WebGLRenderer({canvas: document.getElementById('Canvas'), antialias: true});
+    var renderer = new THREE.WebGLRenderer({canvas: document.getElementById('Canvas'), antialias: true});
     renderer.setClearColor(0x333333);
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
 
-    var camera = new three(1).PerspectiveCamera(35, window.innerWidth/window.innerHeight, 0.1, 20000);
-    var scene = new three(1).Scene();
-    var lightOne = new three(1).AmbientLight(0xffffff, 0.5);
+    var camera = new THREE.PerspectiveCamera(35, window.innerWidth/window.innerHeight, 0.1, 20000);
+    var scene = new THREE.Scene();
+    var lightOne = new THREE.AmbientLight(0xffffff, 0.5);
     scene.add(lightOne);
 
-    var objLoader = new three(1).OBJLoader();
-    objLoader.load("LoadModel.obj", function(mesh) {
+    var objLoader = new THREE.OBJLoader();
+    objLoader.load("myModel.obj", function(mesh) {
       mesh.traverse(function(node) {
-        if (node instanceof three(1).Mesh) {
+        if (node instanceof THREE.Mesh) {
           node.castShadow = true;
           node.receiveShadow = true;
         }
