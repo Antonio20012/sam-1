@@ -14,84 +14,88 @@
      const model = await handpose.load();
      return model;
    };
+// Getting hand keypoints from the video stream
+const getHandKeypoints = async () => {
+const videoElement = document.getElementById('handVideo');
+const model = await loadHandposeModel();
+const predictions = await model.estimateHands(videoElement);
+return predictions;
+};
 
-   // Getting hand keypoints from the video stream
-   const getHandKeypoints = async () => {
-     const videoElement = document.getElementById('handVideo');
-     const model = await loadHandposeModel();
-     const predictions = await model.estimateHands(videoElement);
-     return predictions;
-   };
+// Computing the distance between two points
+const calculateDistance = (point1, point2) => {
+const xDiff = point1[0] - point2[0];
+const yDiff = point1[1] - point2[1];
+return Math.sqrt(xDiff ** 2 + yDiff ** 2);
+};
 
-   // Computing the distance between two points
-   const calculateDistance = (point1, point2) => {
-     const xDiff = point1[0] - point2[0];
-     const yDiff = point1[1] - point2[1];
-     const distance = Math.sqrt(xDiff ** 2 + yDiff ** 2);
-     return distance;
-   };
+// Computing the angle between vectors using the dot product formula
+const calculateAngle = (vector1, vector2) => {
+const dotProduct = vector1[0] * vector2[0] + vector1[1] * vector2[1];
+const magnitude1 = Math.sqrt(vector1[0] ** 2 + vector1[1] ** 2);
+const magnitude2 = Math.sqrt(vector2[0] ** 2 + vector2[1] ** 2);
+return Math.acos(dotProduct / (magnitude1 * magnitude2));
+};
 
-   // Computing the angle between vectors using the dot product formula
-   const calculateAngle = (vector1, vector2) => {
-     const dotProduct = vector1[0] * vector2[0] + vector1[1] * vector2[1];
-     const magnitude1 = Math.sqrt(vector1[0] ** 2 + vector1[1] ** 2);
-     const magnitude2 = Math.sqrt(vector2[0] ** 2 + vector2[1] ** 2);
-     const angle = Math.acos(dotProduct / (magnitude1 * magnitude2));
-     return angle;
-   };
+// Getting the angles between hand fingers
+const getFingerAngles = (keypoints) => {
+const fingerIndices = [
+[0, 1, 2], // Index finger
+[0, 5, 6], // Middle finger
+[0, 9, 10], // Ring finger
+[0, 13, 14], // Pinky finger
+];
+ const angles = [];
 
-   // Getting the angles between hand fingers
-   const getFingerAngles = (keypoints) => {
-     const fingerIndices = [
-       [0, 1, 2],  // Index finger
-       [0, 5, 6],  // Middle finger
-       [0, 9, 10], // Ring finger
-       [0, 13, 14], // Pinky finger
-     ];
+ for (const fingerIndex of fingerIndices) {
+   const [start, middle, end] = fingerIndex;
+   const startPoint = keypoints[start];
+   const middlePoint = keypoints[middle];
+   const endPoint = keypoints[end];
 
-     const angles = [];
+   const vector1 = [middlePoint[0] - startPoint[0], middlePoint[1] - startPoint[1]];
+   const vector2 = [middlePoint[0] - endPoint[0], middlePoint[1] - endPoint[1]];
 
-     for (const fingerIndex of fingerIndices) {
-       const [start, middle, end] = fingerIndex;
-       const startPoint = keypoints[start];
-       const middlePoint = keypoints[middle];
-       const endPoint = keypoints[end];
+   const angle = calculateAngle(vector1, vector2);
+   angles.push(angle);
+ }
 
-       const vector1 = [middlePoint[0] - startPoint[0], middlePoint[1] - startPoint[1]];
-       const vector2 = [middlePoint[0] - endPoint[0], middlePoint[1] - endPoint[1]];
+ return angles;
+};
 
-       const angle = calculateAngle(vector1, vector2);
-       angles.push(angle);
-     }
+// Main function
+const main = async () => {
+const videoElement = document.getElementById('handVideo');
+ try {
+   const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+   videoElement.srcObject = stream;
 
-     return angles;
-   };
+   videoElement.addEventListener('loadeddata', async () => {
+     const keypoints = await getHandKeypoints();
+     const angles = getFingerAngles(keypoints);
+     console.log('Finger angles:', angles);
+   });
 
-   // Main function
-   const main = async () => {
-     const videoElement = document.getElementById('handVideo');
+   // Handle any errors that occur during video stream or handpose estimation
+   videoElement.addEventListener('error', (error) => {
+     console.error('Error accessing video stream:', error);
+   });
+ } catch
+(error) {
+console.error('Error accessing camera:', error);
+}
+};
 
-     try {
-       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-       videoElement.srcObject = stream;
+// Call the main function when the DOM is loaded
+document.addEventListener('DOMContentLoaded', main);
+</script>
 
-       videoElement.addEventListener('loadeddata', async () => {
-         const keypoints = await getHandKeypoints();
-         const angles = getFingerAngles(keypoints
-         console.log('Finger angles:', angles);
-       });
-
-       // Handle any errors that occur during video stream or handpose estimation
-       videoElement.addEventListener('error', (error) => {
-         console.error('Error accessing video stream:', error);
-       });
-     } catch (error) {
-       console.error('Error accessing camera:', error);
-     }
-   };
-
-   // Call the main function when the DOM is loaded
-   document.addEventListener('DOMContentLoaded', main);
-  </script>
 </body>
 </html>
+
+
+
+
+
+
+
