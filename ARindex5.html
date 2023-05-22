@@ -1,36 +1,65 @@
-<!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <title>Сонячна система у віртуальній реальності</title>
-    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
-</head>
-<body>
-    <a-scene>
-        <a-sky color="#000"></a-sky>
-        
-        <a-sphere radius="10" position="0 0 -50" color="#fcb603" src="sun.jpg"></a-sphere>
-        <a-sphere radius="4" position="20 0 -50" color="#c89f7e" src="mercury.jpg" random-position></a-sphere>
-        <a-sphere radius="5" position="30 0 -50" color="#c2c2c2" src="venus.jpg" random-position></a-sphere>
-        <a-sphere radius="6" position="40 0 -50" color="#3c6eb4" src="earth.jpg" random-position></a-sphere>
-        <a-sphere radius="4" position="55 0 -50" color="#a53a19" src="mars.jpg" random-position></a-sphere>
-        <a-sphere radius="12" position="80 0 -50" color="#c8975d" src="jupiter.jpg" random-position></a-sphere>
-        <a-sphere radius="9" position="110 0 -50" color="#f0e68c" src="saturn.jpg" random-position></a-sphere>
-        <a-sphere radius="8" position="140 0 -50" color="#6be1ff" src="uranus.jpg" random-position></a-sphere>
-        <a-sphere radius="7" position="170 0 -50" color="#2056f2" src="neptune.jpg" random-position></a-sphere>
-        <a-sphere radius="2" position="200 0 -50" color="#9a9a9a" src="pluto.jpg" random-position></a-sphere>
-        
-        <script>
-            AFRAME.registerComponent('random-position', {
-                init: function () {
-                    var radius = 100;
-                    var el = this.el;
-                    el.object3D.position.x = Math.random() * radius * 2 - radius;
-                    el.object3D.position.y = Math.random() * radius * 2 - radius;
-                    el.object3D.position.z = Math.random() * radius * 2 - radius;
-                }
-            });
-        </script>
-    </a-scene>
+	<head>
+		<script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+	</head>
+	<body>
+		<a-scene>
+			<a-sky color="black" radius="1500"></a-sky>
+			<a-camera position="0 0 300" 
+				cursor-visible="true" 
+				cursorscale="2" 
+				cursor-color="#0095DD" 
+				cursor-opacity="0.5"></a-camera>
+
+			<a-assets>
+				<img id="sonce-texture" src="laba5/sonce.jpg">
+				<img id="mercuri-texture" src="laba5/mercuri.jpg">
+				<img id="venera-texture" src="laba5/venera.jpg">
+				<img id="zemla-texture" src="laba5/zemla.jpg">
+				<img id="mars-texture" src="laba5/mars.jpg">
+				<img id="jupiter-texture" src="laba5/jupiter.jpg">
+				<img id="saturn-texture" src="laba5/saturn.jpg">
+				<img id="venus-texture" src="laba5/venus.jpg">
+				<img id="neptun-texture" src="laba5/neptun.jpg">
+			</a-assets>
+			
+			<a-entity geometry="primitive: sphere; radius: 20.510" 
+				material="src: #sonce-texture" 
+				animation="property: rotation: 0 360 0; loop: true; dur: 9000"
+				planet="dist: 0; mass: 1.989e30; name: sonce"></a-entity>
+			<a-entity geometry="primitive: sphere; radius: 2.4397"
+				material="src: #mercuri-texture"
+				animation="property: rotation: 0 360 0; loop: true; dur: 9000"
+				planet="dist: 57.910e9; mass: 3.285e23; T: 88; name: mercuri"></a-entity>
+			<a-entity geometry="primitive: sphere; radius: 6.0518"
+				material="src: #venera-texture"
+				animation="property: rotation: 0 360 0; loop: true; dur: 9000"
+				planet="dist: 108.2e9; mass: 4.876e24; T: 224.7; name: venera"></a-entity>
+			<a-entity geometry="primitive: sphere; radius: 6.371"
+				material="src: #zemla-texture"
+				animation="property: rotation: 0 360 0; loop: true; dur: 9000"
+				planet="dist: 149.6e9; mass: 6e24; T: 365; name: zemla"></a-entity>
+			<a-entity geometry="primitive: sphere; radius: 3.396"
+				material="src: #mars-texture"
+				animation="property: rotation: 0 360 0; loop: true; dur: 9000"
+planet="dist: 228.6e9; mass: 6.418e23; T: 687; name: mars"></a-entity>
+<a-entity geometry="primitive: sphere; radius: 69.911"
+ 			material="src: #jupiter-texture"
+ 			animation="property: rotation: 0 360 0; loop: true; dur: 9000"
+ 			planet="dist: 778.6e9; mass: 1.899e27; T: 4329; name: jupiter"></a-entity>
+<a-entity geometry="primitive: sphere; radius: 60.268"
+ 			material="src: #saturn-texture"
+ 			animation="property: rotation: 0 360 0; loop: true; dur: 9000"
+ 			planet="dist: 1433.6e9; mass: 5.68e26; T: 10767; name: saturn"></a-entity>
+<a-entity geometry="primitive: sphere; radius: 25.559"
+ 			material="src: #venus-texture"
+ 			animation="property: rotation: 0 360 0; loop: true; dur: 9000"
+ 			planet="dist: 2876.6e9; mass: 8.68e25; T: 30769; name: venus"></a-entity>
+<a-entity geometry="primitive: sphere; radius: 24.764"
+ 			material="src: #neptun-texture"
+ 			animation="property: rotation: 0 360 0; loop: true; dur: 9000"
+ 			planet="dist: 4503.6e9; mass: 1.02e26; T: 60190; name: neptun"></a-entity>
+			<a-entity main></a-entity>
+	</a-scene>
 </body>
 </html>
