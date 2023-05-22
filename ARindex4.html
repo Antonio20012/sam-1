@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -7,14 +8,14 @@
   </head>
   <body>
     <a-scene embedded arjs>
-      <a-marker type="hiro">
-        <a-box position="0 0.5 0" color="red"></a-box>
+      <a-marker preset="kanji">
+        <a-box position='0 1 0' material='color: yellow;'></a-box>
       </a-marker>
-      <a-marker type="kanji">
-        <a-sphere position="0 0.5 0" radius="0.5" color="green"></a-sphere>
+      <a-marker preset="hiro">
+        <a-sphere position='1 0.5 -1' material='color: pink;'></a-sphere>
       </a-marker>
-      <a-marker type="pattern" url="dz4-pattern.patt">
-        <a-cylinder position="0 0.5 0" radius="0.5" height="1" color="blue"></a-cylinder>
+      <a-marker type='pattern' url='pattern-letterB.patt'>
+        <a-box position='-1 0.5 1' color="cyan"></a-box>
       </a-marker>
       <a-entity camera></a-entity>
     </a-scene>
