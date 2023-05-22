@@ -1,20 +1,29 @@
 <!DOCTYPE html>
 <html>
- <head>
-   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
- </head>
- <body>
-   <a-scene>
-     <a-entity position="-1 1.2 -5">
-       <a-text value="Вітаємо у браузерній VR! Жадько Антон" color="#000000"></a-text>
-     </a-entity>
-     <a-torus position="-2 1 -5" color="red" radius="1.2"></a-torus>
-     <a-plane width="7" height="7" rotation="-55 0 0" position="-2 -2 -5" color="purple"></a-plane>
-     <a-cylinder color="blue" height="2" radius="0.05" position="-2 -1 -5"></a-cylinder>
-     <a-cylinder color="red" height="2" radius="0.05" position="-3 -1 -5"></a-cylinder>
-     <a-torus-knot color="red" radius="1.2" position="-3 1 -5"></a-torus-knot>
-     <a-plane width="14" height="2" position="5 1 -9"></a-plane>
-     <a-sky color="grey"></a-sky>
-   </a-scene>
- </body>
+<head>
+  <script src="aframe.min.js"></script>
+  <meta charset="utf-8">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+    body {
+      font-family: 'Roboto', sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <a-scene>
+    <a-torus position="-2 1 -5" color="green" radius="1.2"
+      animation="property: rotation; to: 0 360 0; loop: true; dur: 5000">
+    </a-torus>
+    <a-plane width="7" height="7" rotation="-55 0 0" position="-2 -2 -5" color="purple"></a-plane>
+    <a-cylinder color="yellow" height="2" radius="0.05" position="-2 -1 -5"></a-cylinder>
+    <a-cylinder color="blue" height="2" radius="0.05" position="-3 -1 -5"></a-cylinder>
+    <a-torus-knot color="orange" radius="1.2" position="-3 1 -5"></a-torus-knot>
+    <a-plane width="9" height="2" position="3 1 -9"></a-plane>
+    <a-entity position="-0.5 1 -6">
+      <a-text value="Вітаємо у браузерній VR! Жадько Антон" color="black" width="10" align="center"></a-text>
+    </a-entity>
+    <a-sky color="grey"></a-sky>
+  </a-scene>
+</body>
 </html>
