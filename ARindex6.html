@@ -8,30 +8,27 @@
 	<body>
 		<a-scene embedded arjs='trackingMethod: best;'>
 			<a-marker type="pattern" url="assets/pattern-letterX.patt" id="X" registerevents>
-					<a-sphere radius="0.15" color="blue"></a-sphere>
-					<a-entity id="lineXY"></a-entity>
+				<a-sphere radius="0.15" color="blue"></a-sphere>
+				<a-entity id="lineXY"></a-entity>
 			</a-marker>
-					<a-marker type="pattern" url="assets/pattern-letterY.patt" id="Y" registerevents>
+			<a-marker type="pattern" url="assets/pattern-letterY.patt" id="Y" registerevents>
 				<a-sphere radius="0.15" color="blue"></a-sphere>
 				<a-entity id="lineYZ"></a-entity>
-		</a-marker>
-		
-		<a-marker type="pattern" url="assets/pattern-letterZ.patt" id="Z" registerevents>
+			</a-marker>
+			<a-marker type="pattern" url="assets/pattern-letterZ.patt" id="Z" registerevents>
 				<a-sphere radius="0.15" color="blue"></a-sphere>
 				<a-entity id="lineZX"></a-entity>
-		</a-marker>
-		
-		<a-marker type="pattern" url="assets/pattern-letterW.patt" id="W" registerevents>
+			</a-marker>
+			<a-marker type="pattern" url="assets/pattern-letterW.patt" id="W" registerevents>
 				<a-sphere radius="0.15" color="blue"></a-sphere>
 				<a-entity id="lineWY"></a-entity>
-		</a-marker>
-		
-		<a-marker type="pattern" url="assets/pattern-letterV.patt" id="V" registerevents>
+			</a-marker>
+			<a-marker type="pattern" url="assets/pattern-letterV.patt" id="V" registerevents>
 				<a-sphere radius="0.15" color="blue"></a-sphere>
 				<a-entity id="lineVX"></a-entity>
-		</a-marker>
-		<a-entity run></a-entity>
-		<a-camera-static/>
-	</a-scene>
-</body>
+			</a-marker>
+			<a-entity run></a-entity>
+			<a-camera-static></a-camera-static>
+		</a-scene>
+	</body>
 </html>
