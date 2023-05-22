@@ -1,44 +1,60 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>OBJLoader</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/loaders/OBJLoader.js"></script>
-</head>
-<body>
-  <canvas id="Canvas"></canvas>
+  <head>
+    <title>Three.js Room Model</title>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <script type="module">
+      import * as THREE from 'https://cdn.skypack.dev/three@0.136.0';
+      import { OBJLoader } from 'https://cdn.skypack.dev/three/examples/jsm/loaders/OBJLoader.js';
 
-  <script>
-    var renderer = new three(1).WebGLRenderer({canvas: document.getElementById('Canvas'), antialias: true});
-    renderer.setClearColor(0x333333);
-    renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setSize(window.innerWidth, window.innerHeight);
+      const renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer.setClearColor(0x333333);
+      renderer.setPixelRatio(window.devicePixelRatio);
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
 
-    var camera = new three(1).PerspectiveCamera(35, window.innerWidth/window.innerHeight, 0.1, 20000);
-    var scene = new three(1).Scene();
-    var lightOne = new three(1).AmbientLight(0xffffff, 0.5);
-    scene.add(lightOne);
+      const camera = new THREE.PerspectiveCamera(
+        35,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        20000
+      );
+      camera.position.set(0, 0, 5);
 
-    var objLoader = new three(1).OBJLoader();
-    objLoader.load("LoadModel.obj", function(mesh) {
-      mesh.traverse(function(node) {
-        if (node instanceof three(1).Mesh) {
-          node.castShadow = true;
-          node.receiveShadow = true;
-        }
+      const scene = new THREE.Scene();
+
+      const lightOne = new THREE.AmbientLight(0xffffff, 0.5);
+      scene.add(lightOne);
+
+      const lightTwo = new THREE.PointLight(0xffffff, 0.5);
+      scene.add(lightTwo);
+
+      const objLoader = new OBJLoader();
+      objLoader.load("Room #1.obj", function (mesh) {
+        mesh.traverse(function (node) {
+          if (node instanceof THREE.Mesh) {
+            node.castShadow = true;
+            node.receiveShadow = true;
+          }
+        });
+        scene.add(mesh);
+        mesh.position.set(0, 0, 0); // Позиция модели
+        mesh.rotation.set(0, Math.PI, 0); // Поворот модели
       });
 
-      scene.add(mesh);
-      mesh.position.set(-80, -50, -150);
-      mesh.rotation.y = -Math.PI/4;
-    });
+      function render() {
+        renderer.render(scene, camera);
+        requestAnimationFrame(render);
+      }
 
-    function render() {
-      renderer.render(scene, camera);
-      requestAnimationFrame(render);
-    }
-
-    render();
-  </script>
-</body>
+      render();
+    </script>
+  </body>
 </html>
