@@ -11,8 +11,8 @@
   </head>
   <body>
     <script type="module">
-      import * as THREE from 'https://cdn.skypack.dev/three@0.136.0';
-      import { OBJLoader } from 'https://cdn.skypack.dev/three/examples/jsm/loaders/OBJLoader.js';
+      import * as THREE from 'https://unpkg.com/three@0.152.2/build/three.module.js';
+      import { OBJLoader } from 'https://cdn.jsdelivr.net/npm/three/examples/jsm/loaders/OBJLoader.js';
 
       const renderer = new THREE.WebGLRenderer({ antialias: true });
       renderer.setClearColor(0x333333);
@@ -37,9 +37,9 @@
       scene.add(lightTwo);
 
       const objLoader = new OBJLoader();
-      objLoader.load("Room #1.obj", function (mesh) {
+      objLoader.load("Room-1.obj", function (mesh) {
         mesh.traverse(function (node) {
-          if (node instanceof THREE.Mesh) {
+          if (node.isMesh) {
             node.castShadow = true;
             node.receiveShadow = true;
           }
